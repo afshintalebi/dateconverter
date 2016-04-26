@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'IRANSans';
+        src: url('fonts/IRANSans-web.eot');
+        src: url('fonts/IRANSans-web.eot?#iefix') format('eot'),
+        url('fonts/IRANSans-web.woff2') format('woff2'),
+        url('fonts/IRANSans-web.woff') format('woff');
+    font-weight: normal;
+}
+body,p,h1,h2,h3,h4,h5,h6,div,input,button,.button,.text-input{
+	font-family : IRANSans;
+}
+.navigation-bar div{
+	font-family : IRANSans ;
+}
+.text-right {
+	text-align: right;
+}
+.text-center {
+	text-align: center;
+}
+.text-left {
+	text-align: left;
+}
+.take-picture-btn {
+	font-size: 35px;
+}
+.button {
+    min-width: 150px;
+}
+.btn-row {
+    margin: 20px 0;
+}
+.row {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.center-block {
+    margin-left: auto;
+    margin-right: auto;
+}
+.txt-year,.txt-month,.txt-day {
+    text-align: center;
+}
+.txt-year {
+    width: 120px;
+}
+.txt-month,.txt-day {
+    width: 80px;
+    
+}
+.ltr {
+    direction: ltr;
+}
+.show {
+    display: block;
+}
+.hidden {
+    display: none;
+}
+.loading {
+    text-align: center;
+    margin: 100px auto;
+}

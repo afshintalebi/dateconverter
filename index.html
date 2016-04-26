@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html dir="rtl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta http-equiv="Content-Security-Policy"/>
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <!-- include CSS files -->
+        <link rel="stylesheet" href="js/lib/onsen/css/onsenui.css"/>
+    	<link rel="stylesheet" href="js/lib/onsen/css/onsen-css-components-blue-basic-theme.css"/>
+        <link rel="stylesheet" href="css/media.css"/>
+        <link rel="stylesheet" href="css/app.css"/>
+        
+        <title>مبدل تاریخ</title>
+    </head>
+    <body data-ng-app="dateConvertor" onload="onBodyLoad();">
+        <!--   Loading text -->
+        <div class="loading" id="loading">کمی صبر کنید ...</div>
+        
+        <!-- include JS files -->
+    	<script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/lib/angular/angular.js"></script>
+        <script src="js/lib/onsen/js/onsenui.js"></script>
+        <div id="body" class="hidden">
+            
+            <!--Navigator-->
+            <ons-navigator title="Convertor" var="navConvertor">
+
+                <ons-page id="homePage" data-ng-controller="homeController"  data-ng-init="init()" on-device-backbutton="exitFromApplication();">
+                    <div>
+                        <ons-toolbar fixed-style>
+                            <div class="center">مبدل تاریخ</div>
+                            <div class="left">
+                                <span class="toolbar-button--quiet navigation-bar__line-height" data-ng-click="navConvertor.pushPage('about.html');">
+                                      <i class="ion-information-circled" style="font-size:20px;"></i>
+                                </span>
+                            </div>
+                        </ons-toolbar>
+                        <div class="text-center">
+                            <h2 data-ng-show="weekDay">
+                                <span>امروز</span>
+                                <span>{{weekDay}}</span>
+                            </h2>
+                            <p data-ng-show="currentHijriDate">
+                                <span>{{currentHijriDate}}</span>
+                                <span>هجری شمسی</span>
+                            </p>
+                            <p data-ng-show="currentGregorianDate">
+                                <span>{{currentGregorianDate}}</span>
+                                <span>میلادی</span>
+                            </p>
+                            <p data-ng-show="currentGhamariDate">
+                                <span>{{currentGhamariDate}}</span>
+                                <span>هجری قمری</span>
+                            </p>
+                            <div class="btn-row">
+                                <button class="button" data-ng-click="navConvertor.pushPage('select-convert-type.html');">
+                                    <i class="ion-android-calendar"></i>
+                                    تبدیل تاریخ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ons-page>
+
+            </ons-navigator>
+
+            <!--About page template-->
+            <ons-template id="about.html">
+               <ons-page>
+                    <ons-toolbar fixed-style>
+                        <div class="left">
+                          <ons-back-button></ons-back-button>
+                        </div>
+                        <div class="center">درباره من</div>
+                    </ons-toolbar>
+                    <div class="text-center">
+                        <ons-row align="center">
+                            <ons-col>
+                                <p>پدیدآورنده : افشین طالبی</p>
+                                <p>
+                                    <a href="http://afshintalebi.ir">afshintalebi.ir</a>
+                                </p>
+                                <p>
+                                    <a href="mailto:afshin.talebi@gmail.com">afshin.talebi@gmail.com</a>
+                                </p>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </ons-page>
+                
+            </ons-template>
+            
+            <!--Select convert type template-->
+            <ons-template id="select-convert-type.html">
+                <ons-page data-ng-controller="typeController">
+                    <ons-toolbar fixed-style>
+                        <div class="right">
+                            <span class="toolbar-button--quiet navigation-bar__line-height" data-ng-click="navConvertor.pushPage('about.html');">
+                                  <i class="ion-information-circled" style="font-size:20px;"></i>
+                            </span>
+                        </div>
+                        <div class="left">
+                            <ons-back-button></ons-back-button>
+                        </div>
+                        <div class="center">انتخاب نوع تبدیل</div>
+                    </ons-toolbar>
+
+                    <div class="text-center">
+                        <div class="btn-row">
+                          <ons-button data-ng-click="gotoPage('hijri-to-gregorian.html');">
+                            شمسی به میلادی
+                          </ons-button>
+
+                          <ons-button data-ng-click="gotoPage('gregorian-to-hijri.html');">
+                              میلادی به شمسی
+                          </ons-button>
+                        </div>
+
+                        <div class="btn-row">
+                          <ons-button data-ng-click="gotoPage('ghamari-to-gregorian.html');">
+                              قمری به میلادی
+                          </ons-button>
+
+                          <ons-button data-ng-click="gotoPage('gregorian-to-ghamari.html');">
+                              میلادی به قمری
+                          </ons-button>
+                        </div>
+
+                        <div class="btn-row">
+                          <ons-button data-ng-click="gotoPage('hijri-to-ghamari.html');">
+                              شمسی به قمری
+                          </ons-button>
+
+                          <ons-button data-ng-click="gotoPage('ghamari-to-hijri.html');">
+                              قمری به شمسی
+                          </ons-button>
+                        </div>
+                   </div>
+                </ons-page>
+            </ons-template>
+
+
+            <!--Hijri to Gregorian template-->
+            <ons-template id="hijri-to-gregorian.html">
+                <ons-page data-ng-controller="hijriToGregorianCrtl">
+                    <ons-toolbar fixed-style>
+                        <div class="right">
+                            <span class="toolbar-button--quiet navigation-bar__line-height" data-ng-click="navConvertor.pushPage('about.html');">
+                                  <i class="ion-information-circled" style="font-size:20px;"></i>
+                            </span>
+                        </div>
+                        <div class="left">
+                          <ons-back-button></ons-back-button>
+                        </div>
+                        <div class="center">تبدیل تاریخ شمسی به میلادی</div>
+                    </ons-toolbar>
+                    <div class="text-center">
+                        <ons-row align="center">
+                            <ons-col>
+                                <form name="shToGreFrm">
+                                    <input type="number" tabindex="3" data-ng-change="emptyConvertedDate();" data-ng-blur="validateJalaliDay();" class="text-input txt-day ltr" name="fromShToGreDay" data-ng-model="fromShToGreDay" placeholder="روز" required="">
+                                    /
+                                    <input type="number" tabindex="2" data-ng-change="emptyConvertedDate();" data-ng-blur="validateJalaliMonth();" class="text-input txt-month ltr" name="fromShToGreMonth" data-ng-model="fromShToGreMonth" placeholder="ماه" required="">
+                                    /
+                                    <input type="number" tabindex="1" data-ng-change="emptyConvertedDate();" data-ng-blur="validateJalaliYear();" class="text-input txt-year ltr" name="fromShToGreYear" data-ng-model="fromShToGreYear" placeholder="سال" required="">
+                                    <div>
+                                        <p ng-show="shToGreFrm.fromShToGreYear.$invalid">{{fromShToGreYearMessage}}</p>
+                                        <p ng-show="!shToGreFrm.fromShToGreYear.$invalid && shToGreFrm.fromShToGreMonth.$invalid">{{fromShToGreMonthMessage}}</p>
+                                        <p ng-show="!shToGreFrm.fromShToGreYear.$invalid && !shToGreFrm.fromShToGreMonth.$invalid && shToGreFrm.fromShToGreDay.$invalid">{{fromShToGreDayMessage}}</p>
+                                    </div>
+                                    <p data-ng-show="!shToGreFrm.$invalid" class="ltr converted-date">{{convertedDate}}</p>
+                                    <div class="btn-row">
+                                        <ons-button data-ng-click="convert();">
+                                            تبدیل تاریخ
+                                        </ons-button>
+                                    </div>
+                                </form>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </ons-page>
+            </ons-template>
+
+            <!--Gregorian to Hijri template-->
+            <ons-template id="gregorian-to-hijri.html">
+                <ons-page data-ng-controller="gregorianToJalaliCrtl">
+                    <ons-toolbar fixed-style>
+                        <div class="right">
+                            <span class="toolbar-button--quiet navigation-bar__line-height" data-ng-click="navConvertor.pushPage('about.html');">
+                                  <i class="ion-information-circled" style="font-size:20px;"></i>
+                            </span>
+                        </div>
+                        <div class="left">
+                          <ons-back-button></ons-back-button>
+                        </div>
+                        <div class="center">تبدیل تاریخ میلادی به شمسی</div>
+                    </ons-toolbar>
+                    <div class="text-center">
+                        <ons-row align="center">
+                            <ons-col>
+                                <form name="greToShFrm">
+                                    <input type="number" tabindex="3" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGregorianDay();" class="text-input txt-day ltr" name="fromGreToShDay" data-ng-model="fromGreToShDay" placeholder="روز" required="">
+                                    /
+                                    <input type="number" tabindex="2" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGregorianMonth();" class="text-input txt-month ltr" name="fromGreToShMonth" data-ng-model="fromGreToShMonth" placeholder="ماه" required="">
+                                    /
+                                    <input type="number" tabindex="1" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGregorianYear();" class="text-input txt-year ltr" name="fromGreToShYear" data-ng-model="fromGreToShYear" placeholder="سال" required="">
+                                    <div>
+                                        <p ng-show="greToShFrm.fromGreToShYear.$invalid">{{fromGreToShYearMessage}}</p>
+                                        <p ng-show="!greToShFrm.fromGreToShYear.$invalid && greToShFrm.fromGreToShMonth.$invalid">{{fromGreToShMonthMessage}}</p>
+                                        <p ng-show="!greToShFrm.fromGreToShYear.$invalid && !greToShFrm.fromGreToShMonth.$invalid && greToShFrm.fromGreToShDay.$invalid">{{fromGreToShDayMessage}}</p>
+                                    </div>
+                                    <p data-ng-show="!greToShFrm.$invalid" class="converted-date">{{convertedDate}}</p>
+                                    <div class="btn-row">
+                                        <ons-button data-ng-click="convert();">
+                                            تبدیل تاریخ
+                                        </ons-button>
+                                    </div>
+                                </form>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </ons-page>
+            </ons-template>
+
+            <!--Ghamari to Gregorian template-->
+            <ons-template id="ghamari-to-gregorian.html">
+                <ons-page data-ng-controller="ghamariToGregorianCtrl">
+                    <ons-toolbar fixed-style>
+                        <div class="right">
+                            <span class="toolbar-button--quiet navigation-bar__line-height" data-ng-click="navConvertor.pushPage('about.html');">
+                                  <i class="ion-information-circled" style="font-size:20px;"></i>
+                            </span>
+                        </div>
+                        <div class="left">
+                          <ons-back-button></ons-back-button>
+                        </div>
+                        <div class="center">تبدیل تاریخ قمری به میلادی</div>
+                    </ons-toolbar>
+                    <div class="text-center">
+                        <ons-row align="center">
+                            <ons-col>
+                                <form name="ghToGreFrm">
+                                    <input type="number" tabindex="3" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGhamariDay();" class="text-input txt-day ltr" name="fromGhToGreDay" data-ng-model="fromGhToGreDay" placeholder="روز" required="">
+                                    /
+                                    <input type="number" tabindex="2" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGhamariMonth();" class="text-input txt-month ltr" name="fromGhToGreMonth" data-ng-model="fromGhToGreMonth" placeholder="ماه" required="">
+                                    /
+                                    <input type="number" tabindex="1" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGhamariYear();" class="text-input txt-year ltr" name="fromGhToGreYear" data-ng-model="fromGhToGreYear" placeholder="سال" required="">
+                                    <div>
+                                        <p ng-show="ghToGreFrm.fromGhToGreYear.$invalid">{{fromGhToGreYearMessage}}</p>
+                                        <p ng-show="!ghToGreFrm.fromGhToGreYear.$invalid && ghToGreFrm.fromGhToGreMonth.$invalid">{{fromGhToGreMonthMessage}}</p>
+                                        <p ng-show="!ghToGreFrm.fromGhToGreYear.$invalid && !ghToGreFrm.fromGhToGreMonth.$invalid && ghToGreFrm.fromGhToGreDay.$invalid">{{fromGhToGreDayMessage}}</p>
+                                    </div>
+                                    <p data-ng-show="!ghToGreFrm.$invalid" class="converted-date">{{convertedDate}}</p>
+                                    <div class="btn-row">
+                                        <ons-button data-ng-click="convert();">
+                                            تبدیل تاریخ
+                                        </ons-button>
+                                    </div>
+                                </form>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </ons-page>
+            </ons-template>
+
+            <!--Gregorian to Ghamari template-->
+            <ons-template id="gregorian-to-ghamari.html">
+                <ons-page data-ng-controller="gregorianToGhamariCtrl">
+                    <ons-toolbar fixed-style>
+                        <div class="right">
+                            <span class="toolbar-button--quiet navigation-bar__line-height" data-ng-click="navConvertor.pushPage('about.html');">
+                                  <i class="ion-information-circled" style="font-size:20px;"></i>
+                            </span>
+                        </div>
+                        <div class="left">
+                          <ons-back-button></ons-back-button>
+                        </div>
+                        <div class="center">تبدیل تاریخ میلادی به قمری</div>
+                    </ons-toolbar>
+                    <div class="text-center">
+                        <ons-row align="center">
+                            <ons-col>
+                                <form name="greToGhFrm">
+                                    <input type="number" tabindex="3" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGregorianDay();" class="text-input txt-day ltr" name="fromGreToGhDay" data-ng-model="fromGreToGhDay" placeholder="روز" required="">
+                                    /
+                                    <input type="number" tabindex="2" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGregorianMonth();" class="text-input txt-month ltr" name="fromGreToGhMonth" data-ng-model="fromGreToGhMonth" placeholder="ماه" required="">
+                                    /
+                                    <input type="number" tabindex="1" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGregorianYear();" class="text-input txt-year ltr" name="fromGreToGhYear" data-ng-model="fromGreToGhYear" placeholder="سال" required="">
+                                    <div>
+                                        <p ng-show="greToGhFrm.fromGreToGhYear.$invalid">{{fromGreToGhYearMessage}}</p>
+                                        <p ng-show="!greToGhFrm.fromGreToGhYear.$invalid && greToGhFrm.fromGreToGhMonth.$invalid">{{fromGreToGhMonthMessage}}</p>
+                                        <p ng-show="!greToGhFrm.fromGreToGhYear.$invalid && !greToGhFrm.fromGreToGhMonth.$invalid && greToGhFrm.fromGreToGhDay.$invalid">{{fromGreToGhDayMessage}}</p>
+                                    </div>
+                                    <p data-ng-show="!ghToGreFrm.$invalid" class="converted-date">{{convertedDate}}</p>
+                                    <div class="btn-row">
+                                        <ons-button data-ng-click="convert();">
+                                            تبدیل تاریخ
+                                        </ons-button>
+                                    </div>
+                                </form>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </ons-page>
+            </ons-template>
+
+            <!--Hijri to Ghamari template-->
+            <ons-template id="hijri-to-ghamari.html">
+                <ons-page data-ng-controller="jalaliToGhamariCtrl">
+                    <ons-toolbar fixed-style>
+                        <div class="right">
+                            <span class="toolbar-button--quiet navigation-bar__line-height" data-ng-click="navConvertor.pushPage('about.html');">
+                                  <i class="ion-information-circled" style="font-size:20px;"></i>
+                            </span>
+                        </div>
+                        <div class="left">
+                          <ons-back-button></ons-back-button>
+                        </div>
+                        <div class="center">تبدیل تاریخ شمسی به قمری</div>
+                    </ons-toolbar>
+                    <div class="text-center">
+                        <ons-row align="center">
+                            <ons-col>
+                                <form name="shToGhFrm">
+                                    <input type="number" tabindex="3" data-ng-change="emptyConvertedDate();" data-ng-blur="validateJalaliDay();" class="text-input txt-day ltr" name="fromShToGhDay" data-ng-model="fromShToGhDay" placeholder="روز" required="">
+                                    /
+                                    <input type="number" tabindex="2" data-ng-change="emptyConvertedDate();" data-ng-blur="validateJalaliMonth();" class="text-input txt-month ltr" name="fromShToGhMonth" data-ng-model="fromShToGhMonth" placeholder="ماه" required="">
+                                    /
+                                    <input type="number" tabindex="1" data-ng-change="emptyConvertedDate();" data-ng-blur="validateJalaliYear();" class="text-input txt-year ltr" name="fromShToGhYear" data-ng-model="fromShToGhYear" placeholder="سال" required="">
+                                    <div>
+                                        <p ng-show="shToGhFrm.fromShToGhYear.$invalid">{{fromShToGhYearMessage}}</p>
+                                        <p ng-show="!shToGhFrm.fromShToGhYear.$invalid && shToGhFrm.fromShToGhMonth.$invalid">{{fromShToGhMonthMessage}}</p>
+                                        <p ng-show="!shToGhFrm.fromShToGhYear.$invalid && !shToGhFrm.fromShToGhMonth.$invalid && shToGhFrm.fromShToGhDay.$invalid">{{fromShToGhDayMessage}}</p>
+                                    </div>
+                                    <p data-ng-show="!shToGhFrm.$invalid" class="converted-date">{{convertedDate}}</p>
+                                    <div class="btn-row">
+                                        <ons-button data-ng-click="convert();">
+                                            تبدیل تاریخ
+                                        </ons-button>
+                                    </div>
+                                </form>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </ons-page>
+            </ons-template>
+
+            <!--Ghamari to Hijri template-->
+            <ons-template id="ghamari-to-hijri.html">
+                <ons-page data-ng-controller="ghamariToJalaliCtrl">
+                    <ons-toolbar fixed-style>
+                        <div class="right">
+                            <span class="toolbar-button--quiet navigation-bar__line-height" data-ng-click="navConvertor.pushPage('about.html');">
+                                  <i class="ion-information-circled" style="font-size:20px;"></i>
+                            </span>
+                        </div>
+                        <div class="left">
+                          <ons-back-button></ons-back-button>
+                        </div>
+                        <div class="center">تبدیل تاریخ قمری به شمسی</div>
+                    </ons-toolbar>
+                    <div class="text-center">
+                        <ons-row align="center">
+                            <ons-col>
+                                <form name="ghToShFrm">
+                                    <input type="number" tabindex="3" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGhamariDay();" class="text-input txt-day ltr" name="fromGhToShDay" data-ng-model="fromGhToShDay" placeholder="روز" required="">
+                                    /
+                                    <input type="number" tabindex="2" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGhamariMonth();" class="text-input txt-month ltr" name="fromGhToShMonth" data-ng-model="fromGhToShMonth" placeholder="ماه" required="">
+                                    /
+                                    <input type="number" tabindex="1" data-ng-change="emptyConvertedDate();" data-ng-blur="validateGhamariYear();" class="text-input txt-year ltr" name="fromGhToShYear" data-ng-model="fromGhToShYear" placeholder="سال" required="">
+                                    <div>
+                                        <p ng-show="ghToShFrm.fromGhToShYear.$invalid">{{fromGhToShYearMessage}}</p>
+                                        <p ng-show="!ghToShFrm.fromGhToShYear.$invalid && ghToShFrm.fromGhToShMonth.$invalid">{{fromGhToShMonthMessage}}</p>
+                                        <p ng-show="!ghToShFrm.fromGhToShYear.$invalid && !ghToShFrm.fromGhToShMonth.$invalid && ghToShFrm.fromGhToShDay.$invalid">{{fromGhToShDayMessage}}</p>
+                                    </div>
+                                    <p data-ng-show="!ghToShFrm.$invalid" class="converted-date">{{convertedDate}}</p>
+                                    <div class="btn-row">
+                                        <ons-button data-ng-click="convert();">
+                                            تبدیل تاریخ
+                                        </ons-button>
+                                    </div>
+                                </form>
+                            </ons-col>
+                        </ons-row>
+                    </div>
+                </ons-page>
+            </ons-template>
+            
+        </div>    
+        <!-- include JS files -->
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/date.js"></script>
+        <script type="text/javascript" src="js/services/date_convertor.js"></script>
+        <script type="text/javascript" src="js/controllers/home_controller.js"></script>
+        <script type="text/javascript" src="js/controllers/type_controller.js"></script>
+        <script type="text/javascript" src="js/controllers/jalali_to_gregorian_controller.js"></script>
+        <script type="text/javascript" src="js/controllers/gregorian_to_jalali_controller.js"></script>
+        <script type="text/javascript" src="js/controllers/ghamari_to_gregorian_controller.js"></script>
+        <script type="text/javascript" src="js/controllers/gregorian_to_ghamari_controller.js"></script>
+        <script type="text/javascript" src="js/controllers/jalali_to_ghamari_controller.js"></script>
+        <script type="text/javascript" src="js/controllers/ghamari_to_jalali_controller.js"></script>
+        <script type="text/javascript" src="js/app_events.js"></script>
+        <script type="text/javascript" src="js/device.js"></script>
+    </body>
+</html>
