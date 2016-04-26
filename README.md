@@ -8,7 +8,7 @@ Technologies and frameworks used are :
 - Cordova/PhoneGap
 - AngularJS
 - Onsen UI
-- 
+
 ***
 Below plugins should be add in Cordova/PhoneGap project :
 - cordova-plugin-splashscreen
