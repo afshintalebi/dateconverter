@@ -26,7 +26,7 @@
     <preference name="auto-hide-splash-screen" value="true" />
     <!--<preference name="SplashScreenDelay" value="10000"/>-->
 
-    <!-- Define required plugins -->
+    <!-- Required plugins -->
     <gap:plugin name="cordova-plugin-splashscreen" />
     <gap:plugin name="cordova-plugin-whitelist" version="1" />
     <gap:plugin name="cordova-plugin-dialogs" />
