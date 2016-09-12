@@ -1,7 +1,7 @@
 # dateconverter
-Simple application for training purpose and convert date based on calenders.
 
-<p>This is a mobile hybrid application for convert date based on calenders. current language is Persian.</p>
+<p>This is a mobile hybrid application for convert date based on calenders. </p>
+<p>language of application is Persian.</p>
 <p>Technologies and frameworks used are :</p>
 - HTML5
 - CSS3
@@ -10,7 +10,7 @@ Simple application for training purpose and convert date based on calenders.
 - Onsen UI
 
 ***
-Below plugins should be add in Cordova/PhoneGap project :
+Below plugins must be add in Cordova/PhoneGap project :
 - cordova-plugin-splashscreen
 - cordova-plugin-dialogs
 - cordova-plugin-device-orientation
