@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.afshintalebi.dateconverter" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>مبدل تاریخ</name>
+    <description>
+        Simple application for training purpose and convert date based on calenders
+    </description>
+    <author email="afshin.talebi@gmail.com" href="http://afshintalebi.com">
+        Afshin Talebi
+    </author>
+    <content src="index.html" />
+    <preference name="permissions" value="none" />
+    <preference name="orientation" value="portrait" />
+    <preference name="target-device" value="universal" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="true" />
+    <preference name="prerendered-icon" value="true" />
+    <preference name="stay-in-webview" value="false" />
+    <preference name="ios-statusbarstyle" value="black-opaque" />
+    <preference name="detect-data-types" value="true" />
+    <preference name="exit-on-suspend" value="false" />
+    <preference name="disable-cursor" value="false" />
+    <preference name="android-minSdkVersion" value="14" />
+    <preference name="android-installLocation" value="auto" />
+    <preference name="show-splash-screen-spinner" value="true" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="auto-hide-splash-screen" value="true" />
+    <!--<preference name="SplashScreenDelay" value="10000"/>-->
+
+    <!-- Define required plugins -->
+    <gap:plugin name="cordova-plugin-splashscreen" />
+    <gap:plugin name="cordova-plugin-whitelist" version="1" />
+    <gap:plugin name="cordova-plugin-dialogs" />
+    <gap:plugin name="cordova-plugin-device-orientation" />
+    
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="mailto:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+        <!-- Android APP Icons -->
+        <icon src="res/icon/android/icon-36-ldpi.png" density="ldpi" />
+        <icon src="res/icon/android/icon-48-mdpi.png" density="mdpi" />
+        <icon src="res/icon/android/icon-72-hdpi.png" density="hdpi" />
+        <icon src="res/icon/android/icon-96-xhdpi.png" density="xhdpi" />
+        
+        <!-- Android splashscreen landscape images -->
+        <splash src="res/screen/android/screen-hdpi-landscape.png" density="land-hdpi"/>
+        <splash src="res/screen/android/screen-ldpi-landscape.png" density="land-ldpi"/>
+        <splash src="res/screen/android/screen-mdpi-landscape.png" density="land-mdpi"/>
+        <splash src="res/screen/android/screen-xhdpi-landscape.png" density="land-xhdpi"/>
+
+        <!-- Android splashscreen portrait images -->
+        <splash src="res/screen/android/screen-hdpi-portrait.png" density="port-hdpi"/>
+        <splash src="res/screen/android/screen-ldpi-portrait.png" density="port-ldpi"/>
+        <splash src="res/screen/android/screen-mdpi-portrait.png" density="port-mdpi"/>
+        <splash src="res/screen/android/screen-xhdpi-portrait.png" density="port-xhdpi"/>
+    
+    </platform>
+</widget>
